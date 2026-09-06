@@ -1,0 +1,182 @@
+/*
+ * whatsapp.css — Hotel HMT Empire
+ * Floating WhatsApp button + toast notification.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Floating WhatsApp Button ────────────────────────────────────────── */
+#whatsapp-fab {
+  position:         fixed;
+  bottom:           var(--sp-8);
+  right:            var(--sp-8);
+  z-index:          var(--z-fab);
+  display:          flex;
+  flex-direction:   column;
+  align-items:      flex-end;
+  gap:              var(--sp-3);
+}
+
+.whatsapp-fab__btn {
+  width:           var(--dim-fab-size);
+  height:          var(--dim-fab-size);
+  border-radius:   var(--radius-circle);
+  background:      var(--clr-whatsapp);
+  color:           #FFF;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  box-shadow:      var(--shadow-whatsapp);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  border:          none;
+  text-decoration: none;
+  position:        relative;
+}
+
+/* Pulse ring animation */
+.whatsapp-fab__btn::before {
+  content:        '';
+  position:       absolute;
+  inset:          -4px;
+  border-radius:  var(--radius-circle);
+  border:         2px solid var(--clr-whatsapp);
+  opacity:        0;
+  animation:      wa-pulse 2.5s ease-out infinite;
+}
+
+.whatsapp-fab__btn::after {
+  content:        '';
+  position:       absolute;
+  inset:          -8px;
+  border-radius:  var(--radius-circle);
+  border:         2px solid var(--clr-whatsapp);
+  opacity:        0;
+  animation:      wa-pulse 2.5s ease-out 0.4s infinite;
+}
+
+@keyframes wa-pulse {
+  0%   { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+.whatsapp-fab__btn:hover {
+  background:  var(--clr-whatsapp-hover);
+  transform:   scale(1.1);
+  box-shadow:  0 6px 28px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-fab__btn:hover::before,
+.whatsapp-fab__btn:hover::after {
+  animation-play-state: paused;
+}
+
+.whatsapp-fab__icon {
+  width:  1.75rem;
+  height: 1.75rem;
+}
+
+/* ── Tooltip label ───────────────────────────────────────────────────── */
+.whatsapp-fab__label {
+  background:      var(--clr-bg-card);
+  color:           var(--clr-text-primary);
+  border:          1px solid var(--clr-border-subtle);
+  border-radius:   var(--radius-pill);
+  padding:         var(--sp-2) var(--sp-4);
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-semibold);
+  white-space:     nowrap;
+  box-shadow:      var(--shadow-sm);
+  /* Hidden by default */
+  opacity:         0;
+  transform:       translateX(8px);
+  pointer-events:  none;
+  transition:      opacity var(--dur-fast) var(--ease-out),
+                   transform var(--dur-fast) var(--ease-out);
+}
+
+#whatsapp-fab:hover .whatsapp-fab__label {
+  opacity:   1;
+  transform: translateX(0);
+}
+
+/* ── Toast Notification ──────────────────────────────────────────────── */
+#toast {
+  position:         fixed;
+  bottom:           var(--sp-8);
+  left:             50%;
+  transform:        translateX(-50%) translateY(120%);
+  z-index:          var(--z-toast);
+  display:          flex;
+  align-items:      center;
+  gap:              var(--sp-3);
+  padding:          var(--sp-3) var(--sp-6);
+  background:       var(--clr-bg-card);
+  border:           1px solid var(--clr-border-subtle);
+  border-radius:    var(--radius-pill);
+  box-shadow:       var(--shadow-lg);
+  font-size:        var(--fs-sm);
+  color:            var(--clr-text-primary);
+  white-space:      nowrap;
+  transition:       transform var(--dur-normal) var(--ease-spring), opacity var(--dur-normal) var(--ease-spring), visibility var(--dur-normal);
+  backdrop-filter:  blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-width:        280px;
+  justify-content:  center;
+  
+  /* Hide completely by default */
+  opacity:          0;
+  pointer-events:   none;
+  visibility:       hidden;
+}
+
+#toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity:   1;
+  pointer-events: all;
+  visibility: visible;
+}
+
+#toast.toast--success {
+  border-color: var(--clr-success);
+  background:   var(--clr-success-bg);
+  color:        var(--clr-success);
+}
+
+#toast.toast--error {
+  border-color: var(--clr-error);
+  background:   var(--clr-error-bg);
+  color:        var(--clr-error);
+}
+
+#toast.toast--info {
+  border-color: var(--clr-gold-border);
+  background:   var(--clr-gold-dim);
+  color:        var(--clr-gold);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  #whatsapp-fab {
+    bottom:  var(--sp-6);
+    right:   var(--sp-4);
+  }
+
+  .whatsapp-fab__btn {
+    width:  var(--dim-fab-size-mobile);
+    height: var(--dim-fab-size-mobile);
+  }
+
+  #toast {
+    width:     calc(100% - var(--sp-8));
+    font-size: var(--fs-xs);
+  }
+}
+
+/* Hide WhatsApp FAB when modal or navigation drawer is open */
+body.modal-open #whatsapp-fab {
+  opacity:        0 !important;
+  pointer-events: none !important;
+  visibility:     hidden !important;
+  transition:     opacity var(--dur-normal) var(--ease-out),
+                  visibility var(--dur-normal) var(--ease-out);
+}

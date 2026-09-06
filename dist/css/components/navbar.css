@@ -1,0 +1,426 @@
+/*
+ * navbar.css — Hotel HMT Empire
+ * Sticky navigation bar with glassmorphism + scroll progress.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Navbar Base ─────────────────────────────────────────────────────── */
+#navbar {
+  position:         fixed;
+  top:              0;
+  left:             0;
+  right:            0;
+  z-index:          var(--z-sticky);
+  height:           var(--sp-nav-h);
+  display:          flex;
+  align-items:      center;
+  padding:          0 var(--sp-section-x);
+  transition:       background-color var(--dur-normal) var(--ease-in-out),
+                    box-shadow var(--dur-normal) var(--ease-in-out),
+                    backdrop-filter var(--dur-normal) var(--ease-in-out),
+                    transform 0.35s var(--ease-in-out),
+                    opacity 0.35s var(--ease-in-out);
+  /* Start transparent over hero */
+  background:       transparent;
+}
+
+/* Hidden state — slides up out of view when booking modal is open */
+#navbar.is-hidden {
+  transform:   translateY(-110%);
+  opacity:     0;
+  pointer-events: none;
+}
+
+/* Scrolled state — frosted glass */
+#navbar.is-scrolled {
+  background:       var(--clr-bg-nav);
+  backdrop-filter:  blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:       var(--shadow-nav);
+  border-bottom:    1px solid var(--clr-border-subtle);
+}
+
+/* ── Scroll Progress Bar ─────────────────────────────────────────────── */
+#navbar__progress {
+  position:   absolute;
+  bottom:     0;
+  left:       0;
+  height:     2px;
+  width:      0%;
+  background: var(--gradient-gold);
+  transition: width 0.05s linear;
+  transform-origin: left center;
+}
+
+/* ── Inner Layout ────────────────────────────────────────────────────── */
+.navbar__inner {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  width:           100%;
+  max-width:       var(--sp-container-max);
+  margin:          0 auto;
+  gap:             var(--sp-8);
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────── */
+.navbar__logo {
+  display:        flex;
+  align-items:    center;
+  gap:            var(--sp-3);
+  text-decoration: none;
+  flex-shrink:    0;
+  cursor:         pointer;
+}
+
+.navbar__logo-text {
+  display:        flex;
+  flex-direction: column;
+}
+
+.navbar__logo-name {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl); /* Enlarged */
+  font-weight:    var(--fw-bold); /* Bold */
+  color:          var(--clr-text-primary);
+  letter-spacing: var(--ls-wide);
+  line-height:    var(--lh-tight);
+}
+
+.navbar__logo-tagline {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-2xs);
+  color:          var(--clr-gold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+}
+
+/* ── Nav Links ───────────────────────────────────────────────────────── */
+.navbar__links {
+  display:     flex;
+  align-items: center;
+  gap:         var(--sp-8);
+}
+
+.navbar__link {
+  position:       relative;
+  font-family:    var(--font-body);
+  font-size:      var(--fs-xs);
+  font-weight:    var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color:          var(--clr-text-secondary);
+  text-decoration: none;
+  transition:     color var(--dur-fast) var(--ease-out);
+  padding-bottom: var(--sp-1);
+}
+
+/* Animated underline */
+.navbar__link::after {
+  content:    '';
+  position:   absolute;
+  bottom:     0;
+  left:       0;
+  width:      0%;
+  height:     1px;
+  background: var(--gradient-gold);
+  transition: width var(--dur-normal) var(--ease-out);
+  border-radius: var(--radius-pill);
+}
+
+.navbar__link:hover,
+.navbar__link.is-active {
+  color: var(--clr-text-primary);
+}
+
+.navbar__link:hover::after,
+.navbar__link.is-active::after {
+  width: 100%;
+}
+
+/* ── Right Controls ──────────────────────────────────────────────────── */
+.navbar__controls {
+  display:     flex;
+  align-items: center;
+  gap:         var(--sp-3);
+  flex-shrink: 0;
+}
+
+/* Theme Toggle Button */
+.navbar__theme-btn {
+  width:           2.25rem;
+  height:          2.25rem;
+  border-radius:   var(--radius-circle);
+  background:      var(--clr-bg-glass);
+  border:          1px solid var(--clr-border-subtle);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  color:           var(--clr-text-secondary);
+  font-size:       1rem;
+}
+
+.navbar__theme-btn:hover {
+  background:   var(--clr-gold-dim);
+  border-color: var(--clr-gold-border);
+  color:        var(--clr-gold);
+  transform:    scale(1.1) rotate(15deg);
+}
+
+.navbar__theme-btn .icon-sun  { display: none; }
+.navbar__theme-btn .icon-moon { display: block; }
+
+[data-theme="light"] .navbar__theme-btn .icon-sun  { display: block; }
+[data-theme="light"] .navbar__theme-btn .icon-moon { display: none;  }
+
+/* Book Now CTA */
+.navbar__cta {
+  /* inherits .btn .btn--primary */
+  font-size: var(--fs-2xs);
+  height:    2.25rem;
+  padding:   0 var(--sp-5);
+}
+
+/* Login CTA */
+.navbar__login-btn {
+  font-size:       var(--fs-2xs);
+  height:          2.25rem;
+  padding:         0 var(--sp-4);
+  display:         inline-flex;
+  align-items:     center;
+  gap:             6px;
+  text-decoration: none;
+  font-weight:     var(--fw-semibold);
+  letter-spacing:  var(--ls-wider);
+  text-transform:  uppercase;
+  border-radius:   var(--radius-pill);
+  transition:      var(--btn-transition);
+}
+
+.navbar__login-icon {
+  flex-shrink: 0;
+  transition:  transform var(--dur-fast) var(--ease-out);
+}
+
+.navbar__login-btn:hover .navbar__login-icon {
+  transform: translateX(2px);
+}
+
+.navbar__hamburger {
+  display:         none;
+  flex-direction:  column;
+  gap:             5px;
+  padding:         var(--sp-2);
+  cursor:          pointer;
+  border-radius:   var(--radius-md);
+  border:          1px solid var(--clr-border-subtle);
+  background:      var(--clr-bg-glass);
+  transition:      var(--btn-transition);
+  position:        relative;
+  z-index:         500; /* Stay on top of mobile menu drawer */
+}
+
+.navbar__hamburger:hover {
+  border-color: var(--clr-gold-border);
+  background:   var(--clr-gold-dim);
+}
+
+.navbar__hamburger span {
+  display:       block;
+  width:         22px;
+  height:        1.5px;
+  background:    var(--clr-text-primary);
+  border-radius: var(--radius-pill);
+  transform-origin: center;
+  transition:    transform var(--dur-normal) var(--ease-spring),
+                 opacity   var(--dur-normal) var(--ease-out),
+                 width     var(--dur-normal) var(--ease-out);
+}
+
+/* Open state */
+.navbar__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.navbar__hamburger.is-open span:nth-child(2) { opacity: 0; width: 0; }
+.navbar__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile Menu Drawer ─────────────────────────────────────────────── */
+#mobile-menu {
+  position:        fixed;
+  inset:           0;
+  z-index:         var(--z-modal);
+  background:      rgba(0, 0, 0, 0);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display:         flex;
+  justify-content: flex-end; /* Align drawer panel to the right side */
+  pointer-events:  none;
+  opacity:         0;
+  transition:      opacity var(--dur-normal) var(--ease-out),
+                   background-color var(--dur-normal) var(--ease-out),
+                   backdrop-filter var(--dur-normal) var(--ease-out);
+}
+
+#mobile-menu.is-open {
+  pointer-events:  all;
+  opacity:         1;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.mobile-menu__inner {
+  width:           min(300px, 80%);
+  height:          100%;
+  background:      var(--clr-bg-card);
+  border-left:     1px solid var(--clr-border-subtle);
+  padding:         var(--sp-24) var(--sp-8) var(--sp-8) var(--sp-8);
+  display:         flex;
+  flex-direction:  column;
+  justify-content: space-between;
+  box-shadow:      var(--shadow-xl);
+  transform:       translateX(100%);
+  transition:      transform var(--dur-normal) var(--ease-luxury);
+}
+
+#mobile-menu.is-open .mobile-menu__inner {
+  transform:       translateX(0);
+}
+
+#mobile-menu-links {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-2);
+  width:          100%;
+}
+
+.mobile-menu__link {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl);
+  font-weight:    var(--fw-medium);
+  color:          var(--clr-text-primary);
+  letter-spacing: var(--ls-wide);
+  text-decoration: none;
+  display:        block;
+  padding:        var(--sp-3) var(--sp-4);
+  border-bottom:  1px solid var(--clr-border-subtle);
+  opacity:        0;
+  transform:      translateY(20px);
+  transition:     color var(--dur-fast) var(--ease-out),
+                  padding-left var(--dur-fast) var(--ease-out);
+}
+
+.mobile-menu__link:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu__link:hover {
+  color:        var(--clr-gold);
+  padding-left: var(--sp-6);
+}
+
+.mobile-menu__footer {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-2xs);
+  color:          var(--clr-text-muted);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  text-align:     center;
+  margin-top:     auto;
+  opacity:        0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  #navbar {
+    padding: 0 var(--sp-4);
+    height:  var(--sp-nav-h-mobile);
+  }
+
+  .navbar__inner {
+    gap: var(--sp-2) !important;
+  }
+
+  .navbar__logo-name {
+    font-size: var(--fs-md) !important;
+  }
+
+  .navbar__logo-tagline {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar__cta,
+  .navbar__login-btn {
+    display: none;
+  }
+}
+
+/* Ensure header is visible on top of dark hero background in both light/dark themes when transparent */
+#navbar:not(.is-scrolled) .navbar__logo-name {
+  color: #F5F0E8 !important; /* Force light primary text over dark hero */
+}
+
+#navbar:not(.is-scrolled) .navbar__link {
+  color: #C8BFB0 !important; /* Force light secondary text over dark hero */
+}
+
+#navbar:not(.is-scrolled) .navbar__link:hover,
+#navbar:not(.is-scrolled) .navbar__link.is-active {
+  color: #FFFFFF !important;
+}
+
+#navbar:not(.is-scrolled) .navbar__theme-btn {
+  color: #C8BFB0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+#navbar:not(.is-scrolled) .navbar__theme-btn:hover {
+  color: #C9A84C !important;
+  background: rgba(201, 168, 76, 0.15) !important;
+  border-color: rgba(201, 168, 76, 0.3) !important;
+}
+
+#navbar:not(.is-scrolled) .navbar__login-btn {
+  color: #E2C98A !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(201, 168, 76, 0.4) !important;
+}
+
+#navbar:not(.is-scrolled) .navbar__login-btn:hover {
+  color: #FFFFFF !important;
+  background: rgba(201, 168, 76, 0.25) !important;
+  border-color: var(--clr-gold) !important;
+}
+
+#navbar:not(.is-scrolled) .navbar__hamburger span {
+  background: #F5F0E8 !important;
+}
+
+/* ── Drawer Open Header Layer Synchronization ───────────────────────── */
+body.drawer-open #navbar {
+  z-index: 500 !important; /* Elevate navbar above drawer backdrop overlay */
+}
+
+/* Hide other controls so only the X exit button is showing on top of the drawer */
+body.drawer-open .navbar__logo,
+body.drawer-open .navbar__theme-btn,
+body.drawer-open .navbar__cta,
+body.drawer-open .navbar__login-btn {
+  opacity:        0 !important;
+  pointer-events: none !important;
+  visibility:     hidden !important;
+  transition:     opacity var(--dur-normal) var(--ease-out),
+                  visibility var(--dur-normal) var(--ease-out);
+}
+

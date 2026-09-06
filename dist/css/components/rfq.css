@@ -1,0 +1,249 @@
+/*
+ * rfq.css — Hotel HMT Empire
+ * Multi-step Request for Quote form.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+#rfq {
+  background: var(--clr-bg-primary);
+}
+
+/* ── RFQ Layout ──────────────────────────────────────────────────────── */
+.rfq__layout {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   clamp(3rem, 6vw, 6rem);
+  align-items:           start;
+}
+
+/* Left info panel */
+.rfq__info {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-8);
+  position:       sticky;
+  top:            calc(var(--sp-nav-h) + var(--sp-8));
+}
+
+.rfq__guarantee-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-4);
+}
+
+.rfq__guarantee-item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         var(--sp-4);
+}
+
+.rfq__guarantee-icon {
+  width:           2.5rem;
+  height:          2.5rem;
+  flex-shrink:     0;
+  border-radius:   var(--radius-md);
+  background:      var(--clr-gold-dim);
+  border:          1px solid var(--clr-gold-border);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       var(--fs-lg);
+}
+
+.rfq__guarantee-text strong {
+  display:      block;
+  font-size:    var(--fs-base);
+  color:        var(--clr-text-primary);
+  margin-bottom: var(--sp-1);
+}
+
+.rfq__guarantee-text p {
+  font-size:   var(--fs-sm);
+  color:       var(--clr-text-muted);
+  line-height: var(--lh-relaxed);
+}
+
+/* ── Multi-Step Form Container ───────────────────────────────────────── */
+.rfq__form-container {
+  background:    var(--clr-bg-card);
+  border:        1px solid var(--clr-border-subtle);
+  border-radius: var(--radius-2xl);
+  box-shadow:    var(--shadow-card);
+  overflow:      hidden;
+}
+
+/* ── Step Progress ───────────────────────────────────────────────────── */
+.rfq__progress {
+  display:         flex;
+  align-items:     center;
+  padding:         var(--sp-6) var(--sp-8);
+  border-bottom:   1px solid var(--clr-border-subtle);
+  background:      var(--clr-bg-glass);
+  gap:             var(--sp-2);
+}
+
+.rfq__step-dot {
+  width:           2rem;
+  height:          2rem;
+  border-radius:   var(--radius-circle);
+  background:      var(--clr-bg-secondary);
+  border:          2px solid var(--clr-border-subtle);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-bold);
+  color:           var(--clr-text-muted);
+  transition:      var(--btn-transition);
+  flex-shrink:     0;
+}
+
+.rfq__step-dot.is-active {
+  background:   var(--gradient-gold);
+  border-color: transparent;
+  color:        var(--clr-text-inverse);
+  box-shadow:   var(--shadow-gold-sm);
+}
+
+.rfq__step-dot.is-done {
+  background:   var(--clr-success-bg);
+  border-color: var(--clr-success);
+  color:        var(--clr-success);
+}
+
+.rfq__step-connector {
+  flex:           1;
+  height:         1px;
+  background:     var(--clr-border-subtle);
+  transition:     background var(--dur-normal) var(--ease-out);
+}
+
+.rfq__step-connector.is-done {
+  background: var(--gradient-gold);
+}
+
+/* ── Step Panel ──────────────────────────────────────────────────────── */
+.rfq__step {
+  display: none;
+  padding: var(--sp-8);
+  flex-direction: column;
+  gap: var(--sp-6);
+  min-height: 320px;
+}
+
+.rfq__step.is-active {
+  display: flex;
+}
+
+.rfq__step-title {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-2xl);
+  color:          var(--clr-text-primary);
+  font-weight:    var(--fw-medium);
+}
+
+/* Event type grid (Step 1) */
+.rfq__event-types {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap:                   var(--sp-3);
+}
+
+.rfq__event-btn {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            var(--sp-2);
+  padding:        var(--sp-5) var(--sp-4);
+  background:     var(--clr-bg-glass);
+  border:         1px solid var(--clr-border-subtle);
+  border-radius:  var(--radius-lg);
+  cursor:         pointer;
+  transition:     var(--btn-transition);
+  text-align:     center;
+}
+
+.rfq__event-btn:hover {
+  border-color: var(--clr-border);
+  background:   var(--clr-bg-glass-hover);
+}
+
+.rfq__event-btn.is-selected {
+  background:   var(--clr-gold-dim);
+  border-color: var(--clr-gold);
+  box-shadow:   var(--shadow-gold-sm);
+}
+
+.rfq__event-icon {
+  font-size: var(--fs-2xl);
+}
+
+.rfq__event-label {
+  font-size:      var(--fs-xs);
+  font-weight:    var(--fw-medium);
+  color:          var(--clr-text-secondary);
+  letter-spacing: var(--ls-wide);
+}
+
+/* Guest count step */
+.rfq__guest-slider {
+  width:  100%;
+  accent-color: var(--clr-gold);
+}
+
+.rfq__guest-display {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-4xl);
+  color:          var(--clr-gold);
+  text-align:     center;
+  line-height:    var(--lh-none);
+}
+
+.rfq__guest-label {
+  text-align:     center;
+  font-size:      var(--fs-sm);
+  color:          var(--clr-text-muted);
+  letter-spacing: var(--ls-wider);
+}
+
+/* ── Honeypot ────────────────────────────────────────────────────────── */
+.rfq__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Form Footer ─────────────────────────────────────────────────────── */
+.rfq__form-footer {
+  display:       flex;
+  justify-content: space-between;
+  padding:       var(--sp-6) var(--sp-8);
+  border-top:    1px solid var(--clr-border-subtle);
+  background:    var(--clr-bg-glass);
+}
+
+/* ── Success Screen ──────────────────────────────────────────────────── */
+.rfq__success {
+  display:          flex;
+  flex-direction:   column;
+  align-items:      center;
+  text-align:       center;
+  gap:              var(--sp-6);
+  padding:          var(--sp-12) var(--sp-8);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .rfq__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rfq__info {
+    position: relative;
+    top: 0;
+  }
+}

@@ -1,0 +1,146 @@
+/*
+ * experience.css — Hotel HMT Empire
+ * Styling for the luxury drone tour Experience section.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+.experience__grid {
+  display:               grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap:                   var(--sp-12);
+  align-items:           center;
+}
+
+.experience__info {
+  display:        flex;
+  flex-direction: column;
+  align-items:     start;
+}
+
+.experience__text {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-md);
+  color:          var(--clr-text-muted);
+  line-height:    var(--lh-relaxed);
+  margin-bottom:  var(--sp-5);
+  max-width:      54ch;
+}
+
+.experience__text:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ── Video Container & Mock Frame ────────────────────────────────────── */
+.experience__video-container {
+  width: 100%;
+}
+
+.experience__video-wrapper {
+  position:      relative;
+  width:         100%;
+  aspect-ratio:  16 / 10;
+  border-radius: var(--radius-2xl);
+  overflow:      hidden;
+  border:        1px solid var(--clr-border-subtle);
+  box-shadow:    var(--shadow-card);
+  background:    #000;
+}
+
+.experience__video {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+  opacity:    0.85;
+  transition: opacity 0.3s;
+}
+
+.experience__video-wrapper:hover .experience__video {
+  opacity: 1;
+}
+
+/* ── Interactive Overlay and Controls ────────────────────────────────── */
+.experience__video-overlay {
+  position:        absolute;
+  inset:           0;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      rgba(0, 0, 0, 0.25);
+  transition:      background-color 0.3s ease;
+  pointer-events:  none; /* let clicks pass through to container click handler */
+}
+
+.experience__video-wrapper:hover .experience__video-overlay {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.experience__play-btn {
+  pointer-events:  auto; /* capture click on the button itself */
+  width:           4rem;
+  height:          4rem;
+  border-radius:   var(--radius-circle);
+  background:      rgba(0, 0, 0, 0.65);
+  border:          1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color:           #fff;
+  cursor:          pointer;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  transition:      background var(--dur-normal) var(--ease-out),
+                   border-color var(--dur-normal) var(--ease-out),
+                   transform var(--dur-normal) var(--ease-out),
+                   opacity 0.3s ease;
+  box-shadow:      0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.experience__play-btn:hover {
+  background:   var(--gradient-gold);
+  border-color: var(--clr-gold);
+  color:        #1a1a1a;
+  transform:    scale(1.1);
+}
+
+.experience__play-icon {
+  font-size:   1rem;
+  margin-left: 3px; /* visual alignment shift for play triangle */
+}
+
+/* Pause icon state overlay */
+.experience__play-btn.is-playing .experience__play-icon {
+  margin-left: 0;
+  content:     '';
+  display:     inline-block;
+  width:       12px;
+  height:      12px;
+  border-left:  3px solid currentColor;
+  border-right: 3px solid currentColor;
+  border-top:   none;
+  border-bottom:none;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .experience__grid {
+    grid-template-columns: 1fr;
+    gap:                   var(--sp-8);
+  }
+
+  .experience__text {
+    max-width: 100%;
+  }
+
+  .experience__play-btn {
+    width:  3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience__video-wrapper {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-xl);
+  }
+}
