@@ -1,0 +1,73 @@
+/*
+ * motion.css — Hotel HMT Empire
+ * Animation durations and easing curves.
+ * ALL transition/animation timing lives here. Zero hardcoded values in components.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* ── Durations ──────────────────────────────────────────────────── */
+  --dur-instant:    80ms;    /* imperceptible — immediate feedback         */
+  --dur-fast:       180ms;   /* quick micro-interactions (button press)    */
+  --dur-normal:     320ms;   /* standard UI transitions                    */
+  --dur-slow:       500ms;   /* deliberate, meaningful transitions         */
+  --dur-xslow:      800ms;   /* page section reveals                       */
+  --dur-lazy:       1200ms;  /* slow dramatic reveals                      */
+  --dur-cinematic:  1800ms;  /* preloader, hero entrances                  */
+  --dur-epic:       2800ms;  /* full preloader sequence                    */
+
+  /* ── Easing Curves ──────────────────────────────────────────────── */
+  /* Standard Material easing */
+  --ease-linear:    linear;
+  --ease-out:       cubic-bezier(0.0, 0.0, 0.2, 1.0);   /* decelerate       */
+  --ease-in:        cubic-bezier(0.4, 0.0, 1.0, 1.0);   /* accelerate       */
+  --ease-in-out:    cubic-bezier(0.4, 0.0, 0.2, 1.0);   /* standard         */
+
+  /* Luxury / editorial curves */
+  --ease-luxury:    cubic-bezier(0.25, 0.1, 0.0,  1.0); /* slow, editorial  */
+  --ease-cinematic: cubic-bezier(0.16, 1.0, 0.3,  1.0); /* cinematic reveal */
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1.0);/* springy bounce   */
+  --ease-back-out:  cubic-bezier(0.34, 1.2,  0.64, 1.0);/* slight overshoot */
+  --ease-sharp:     cubic-bezier(0.4,  0.0,  0.6,  1.0);/* sharp transition */
+
+  /* ── Composite Transitions ──────────────────────────────────────── */
+  /* Applied globally for dark/light theme switching */
+  --theme-transition:
+    background-color  var(--dur-normal) var(--ease-in-out),
+    color             var(--dur-normal) var(--ease-in-out),
+    border-color      var(--dur-normal) var(--ease-in-out),
+    box-shadow        var(--dur-normal) var(--ease-in-out),
+    fill              var(--dur-normal) var(--ease-in-out),
+    stroke            var(--dur-normal) var(--ease-in-out);
+
+  /* Card / interactive element hover transition */
+  --hover-transition:
+    transform         var(--dur-normal) var(--ease-out),
+    box-shadow        var(--dur-normal) var(--ease-out),
+    background-color  var(--dur-fast)   var(--ease-out),
+    border-color      var(--dur-fast)   var(--ease-out),
+    opacity           var(--dur-normal) var(--ease-out);
+
+  /* Button press feedback */
+  --btn-transition:
+    background-color  var(--dur-fast)   var(--ease-out),
+    color             var(--dur-fast)   var(--ease-out),
+    transform         var(--dur-fast)   var(--ease-out),
+    box-shadow        var(--dur-fast)   var(--ease-out),
+    border-color      var(--dur-fast)   var(--ease-out);
+}
+
+/* ── Accessibility: Reduced Motion ──────────────────────────────────── */
+/* Users who prefer reduced motion get instant transitions              */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant:    0ms;
+    --dur-fast:       0ms;
+    --dur-normal:     0ms;
+    --dur-slow:       0ms;
+    --dur-xslow:      0ms;
+    --dur-lazy:       0ms;
+    --dur-cinematic:  0ms;
+    --dur-epic:       0ms;
+  }
+}

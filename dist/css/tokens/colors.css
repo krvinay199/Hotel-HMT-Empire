@@ -1,0 +1,148 @@
+/*
+ * colors.css — Hotel HMT Empire
+ * Equivalent to Android's res/values/colors.xml
+ * ALL color values live here. Zero hardcoded colors in component files.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Dark Theme (Default) ───────────────────────────────────────────── */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --clr-bg-primary:        #0A0A0A;
+  --clr-bg-secondary:      #141414;
+  --clr-bg-card:           #1C1C1C;
+  --clr-bg-card-hover:     #242424;
+  --clr-bg-glass:          rgba(255, 255, 255, 0.05);
+  --clr-bg-glass-hover:    rgba(255, 255, 255, 0.09);
+  --clr-bg-overlay:        rgba(0, 0, 0, 0.78);
+  --clr-bg-overlay-light:  rgba(0, 0, 0, 0.45);
+  --clr-bg-nav:            rgba(10, 10, 10, 0.85);
+  --clr-bg-nav-solid:      #0A0A0A;
+  --clr-bg-input:          rgba(255, 255, 255, 0.06);
+  --clr-bg-input-focus:    rgba(255, 255, 255, 0.10);
+  --clr-bg-preloader:      #0A0A0A;
+
+  /* Text */
+  --clr-text-primary:      #F5F0E8;
+  --clr-text-secondary:    #C8BFB0;
+  --clr-text-muted:        #8A8278;
+  --clr-text-disabled:     #4A4642;
+  --clr-text-inverse:      #0A0A0A;
+  --clr-text-on-accent:    #0A0A0A;
+
+  /* Accent — Gold */
+  --clr-gold:              #C9A84C;
+  --clr-gold-light:        #DFC070;
+  --clr-gold-dark:         #A8872E;
+  --clr-gold-dim:          rgba(201, 168, 76, 0.15);
+  --clr-gold-dim-hover:    rgba(201, 168, 76, 0.25);
+  --clr-gold-border:       rgba(201, 168, 76, 0.3);
+
+  /* Accent — Emerald (Jharkhand hills reference) */
+  --clr-emerald:           #2D6A4F;
+  --clr-emerald-light:     #40916C;
+  --clr-emerald-dim:       rgba(45, 106, 79, 0.2);
+
+  /* Borders */
+  --clr-border:            rgba(201, 168, 76, 0.2);
+  --clr-border-subtle:     rgba(255, 255, 255, 0.07);
+  --clr-border-input:      rgba(255, 255, 255, 0.12);
+  --clr-border-input-focus: rgba(201, 168, 76, 0.6);
+
+  /* Semantic */
+  --clr-success:           #4CAF7C;
+  --clr-success-bg:        rgba(76, 175, 124, 0.12);
+  --clr-warning:           #E6A817;
+  --clr-warning-bg:        rgba(230, 168, 23, 0.12);
+  --clr-error:             #E05C5C;
+  --clr-error-bg:          rgba(224, 92, 92, 0.12);
+  --clr-info:              #5C9EE0;
+  --clr-info-bg:           rgba(92, 158, 224, 0.12);
+
+  /* Brand Integrations */
+  --clr-whatsapp:          #25D366;
+  --clr-whatsapp-hover:    #1EB855;
+  --clr-whatsapp-bg:       rgba(37, 211, 102, 0.12);
+
+  /* Gradients */
+  --gradient-hero:         linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
+  --gradient-gold:         linear-gradient(135deg, #C9A84C 0%, #DFC070 50%, #A8872E 100%);
+  --gradient-card:         linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.9) 100%);
+  --gradient-section:      linear-gradient(180deg, #0A0A0A 0%, #141414 100%);
+  --gradient-preloader:    linear-gradient(135deg, #0A0A0A 0%, #141414 100%);
+
+  /* Scrollbar */
+  --clr-scrollbar-track:   #141414;
+  --clr-scrollbar-thumb:   #C9A84C;
+}
+
+/* ── Light Theme ─────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  /* Backgrounds */
+  --clr-bg-primary:        #FAF7F2;
+  --clr-bg-secondary:      #FFFFFF;
+  --clr-bg-card:           #F2EDE5;
+  --clr-bg-card-hover:     #EAE4DA;
+  --clr-bg-glass:          rgba(0, 0, 0, 0.04);
+  --clr-bg-glass-hover:    rgba(0, 0, 0, 0.07);
+  --clr-bg-overlay:        rgba(0, 0, 0, 0.55);
+  --clr-bg-overlay-light:  rgba(0, 0, 0, 0.25);
+  --clr-bg-nav:            rgba(250, 247, 242, 0.90);
+  --clr-bg-nav-solid:      #FAF7F2;
+  --clr-bg-input:          rgba(0, 0, 0, 0.04);
+  --clr-bg-input-focus:    rgba(0, 0, 0, 0.07);
+  --clr-bg-preloader:      #FAF7F2;
+
+  /* Text */
+  --clr-text-primary:      #1A1A1A;
+  --clr-text-secondary:    #3D3530;
+  --clr-text-muted:        #6B6259;
+  --clr-text-disabled:     #B0A89E;
+  --clr-text-inverse:      #FAF7F2;
+  --clr-text-on-accent:    #FAF7F2;
+
+  /* Accent — Gold (darker for WCAG contrast) */
+  --clr-gold:              #A8872E;
+  --clr-gold-light:        #C9A84C;
+  --clr-gold-dark:         #7A5F1A;
+  --clr-gold-dim:          rgba(168, 135, 46, 0.12);
+  --clr-gold-dim-hover:    rgba(168, 135, 46, 0.2);
+  --clr-gold-border:       rgba(168, 135, 46, 0.3);
+
+  /* Accent — Emerald */
+  --clr-emerald:           #1E4D38;
+  --clr-emerald-light:     #2D6A4F;
+  --clr-emerald-dim:       rgba(30, 77, 56, 0.12);
+
+  /* Borders */
+  --clr-border:            rgba(168, 135, 46, 0.25);
+  --clr-border-subtle:     rgba(0, 0, 0, 0.08);
+  --clr-border-input:      rgba(0, 0, 0, 0.15);
+  --clr-border-input-focus: rgba(168, 135, 46, 0.6);
+
+  /* Semantic */
+  --clr-success:           #276843;
+  --clr-success-bg:        rgba(39, 104, 67, 0.1);
+  --clr-warning:           #B07C0A;
+  --clr-warning-bg:        rgba(176, 124, 10, 0.1);
+  --clr-error:             #B83232;
+  --clr-error-bg:          rgba(184, 50, 50, 0.1);
+  --clr-info:              #2C6BAD;
+  --clr-info-bg:           rgba(44, 107, 173, 0.1);
+
+  /* Brand Integrations */
+  --clr-whatsapp:          #128C50;
+  --clr-whatsapp-hover:    #0E7040;
+  --clr-whatsapp-bg:       rgba(18, 140, 80, 0.1);
+
+  /* Gradients */
+  --gradient-hero:         linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
+  --gradient-gold:         linear-gradient(135deg, #A8872E 0%, #C9A84C 50%, #7A5F1A 100%);
+  --gradient-card:         linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+  --gradient-section:      linear-gradient(180deg, #FAF7F2 0%, #FFFFFF 100%);
+  --gradient-preloader:    linear-gradient(135deg, #FAF7F2 0%, #FFFFFF 100%);
+
+  /* Scrollbar */
+  --clr-scrollbar-track:   #F2EDE5;
+  --clr-scrollbar-thumb:   #A8872E;
+}

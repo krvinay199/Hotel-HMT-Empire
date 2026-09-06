@@ -1,0 +1,31 @@
+/*
+ * z-index.css — Hotel HMT Empire
+ * Named z-index layer stacking system.
+ * ALL z-index values live here. Zero magic numbers in component files.
+ * ─────────────────────────────────────────────────────────────────────
+ *
+ * Layer Stack (bottom → top):
+ *   below      (-1)   ← decorative pseudo-elements behind content
+ *   base        (0)   ← normal document flow
+ *   raised     (10)   ← cards, floating elements within sections
+ *   dropdown  (100)   ← dropdowns, tooltips
+ *   sticky    (200)   ← sticky navbar
+ *   overlay   (300)   ← modal backdrops, video overlays
+ *   modal     (400)   ← booking modal, lightbox, dialogs
+ *   toast     (500)   ← notification toasts
+ *   preloader(1000)   ← cinematic intro (always on top)
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+:root {
+  --z-below:       -1;    /* decorative pseudo-elements behind content     */
+  --z-base:         0;    /* default stacking context                      */
+  --z-raised:      10;    /* room cards, hover effects                     */
+  --z-dropdown:   100;    /* nav dropdowns, select menus, tooltips         */
+  --z-sticky:     200;    /* sticky navbar, floating room filter pills     */
+  --z-overlay:    300;    /* hero gradient overlay, modal backdrop         */
+  --z-modal:      400;    /* booking modal, gallery lightbox               */
+  --z-toast:      500;    /* success / error notification toasts           */
+  --z-fab:        600;    /* floating WhatsApp button                      */
+  --z-preloader: 1000;    /* cinematic intro preloader (always topmost)    */
+}

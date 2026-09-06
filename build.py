@@ -31,6 +31,10 @@ def minify_css(css_content: str) -> str:
     """Minify CSS by stripping comments, whitespace, and formatting."""
     # Remove CSS comments
     css = re.sub(r'/\*[\s\S]*?\*/', '', css_content)
+    # Remove @import for local tokens since tokens are already inlined directly
+    css = re.sub(r"@import\s+url\(['\"]\./tokens/[^'\"]+['\"]\);?", '', css)
+    # Fix asset paths relative to dist/css/bundle.min.css
+    css = css.replace('../../assets/', '../assets/')
     # Remove newlines and tabs
     css = re.sub(r'[\r\n\t]+', ' ', css)
     # Remove space around punctuation
@@ -77,7 +81,6 @@ def minify_js(js_content: str) -> str:
         
         # Strip trailing single-line comments if not part of string
         if '//' in stripped and not ('http://' in stripped or 'https://' in stripped or '://' in stripped):
-            # Safe basic strip if comment is at end
             parts = stripped.split('//')
             if len(parts) == 2 and not ('"' in parts[1] or "'" in parts[1] or '`' in parts[1]):
                 stripped = parts[0].strip()
@@ -85,7 +88,6 @@ def minify_js(js_content: str) -> str:
         cleaned_lines.append(stripped)
 
     js = '\n'.join(cleaned_lines)
-    # Remove inline block comments
     js = re.sub(r'/\*[\s\S]*?\*/', '', js)
     return js.strip()
 
@@ -108,8 +110,14 @@ def build():
     DIST_DIR.mkdir(parents=True, exist_ok=True)
     log("Created clean `dist/` directory")
 
-    # 2. Bundle & Minify Main CSS
+    # 2. Bundle & Minify Main CSS (including design tokens)
     css_files_order = [
+        ROOT_DIR / "css" / "tokens" / "colors.css",
+        ROOT_DIR / "css" / "tokens" / "typography.css",
+        ROOT_DIR / "css" / "tokens" / "spacing.css",
+        ROOT_DIR / "css" / "tokens" / "shadows.css",
+        ROOT_DIR / "css" / "tokens" / "z-index.css",
+        ROOT_DIR / "css" / "tokens" / "motion.css",
         ROOT_DIR / "css" / "reset.css",
         ROOT_DIR / "css" / "base.css",
         ROOT_DIR / "css" / "layout.css",
@@ -140,10 +148,22 @@ def build():
     (dist_css_dir / "bundle.min.css").write_text(minified_bundle_css, encoding="utf-8")
     log(f"Bundled {len(css_files_order)} stylesheets into `dist/css/bundle.min.css` ({len(minified_bundle_css):,} bytes)")
 
+    # Copy tokens to dist/css/tokens as fallback
+    tokens_src = ROOT_DIR / "css" / "tokens"
+    if tokens_src.exists():
+        shutil.copytree(tokens_src, dist_css_dir / "tokens")
+
     # 3. Process & Minify Admin CSS
     admin_css_file = ROOT_DIR / "css" / "components" / "admin.css"
     if admin_css_file.exists():
+        admin_tokens_css = ""
+        for t in ["colors.css", "typography.css", "spacing.css", "shadows.css", "z-index.css", "motion.css"]:
+            tp = ROOT_DIR / "css" / "tokens" / t
+            if tp.exists():
+                admin_tokens_css += tp.read_text(encoding="utf-8") + "\n"
+
         admin_bundle = minify_css(
+            admin_tokens_css +
             (ROOT_DIR / "css" / "reset.css").read_text(encoding="utf-8") + "\n" +
             (ROOT_DIR / "css" / "base.css").read_text(encoding="utf-8") + "\n" +
             (ROOT_DIR / "css" / "layout.css").read_text(encoding="utf-8") + "\n" +
