@@ -214,16 +214,24 @@ function observeActiveSections() {
 
 /** Handle all anchor links throughout the page for smooth scroll */
 function handleAnchorClicks() {
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
     if (anchor.classList.contains('navbar__link') || anchor.classList.contains('mobile-menu__link')) {
       return; // already handled above
     }
-    anchor.addEventListener('click', (e) => {
-      const href = anchor.getAttribute('href');
-      if (href && href !== '#') {
-        e.preventDefault();
-        scrollTo(href, -80);
+    const href = anchor.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1 && !href.startsWith('#/')) {
+      try {
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          e.preventDefault();
+          scrollTo(href, -80);
+        }
+      } catch {
+        // Not a valid CSS selector, let standard behavior handle it
       }
-    });
+    }
   });
 }
+

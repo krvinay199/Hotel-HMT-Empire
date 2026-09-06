@@ -57,12 +57,25 @@ export function initLenis() {
 
 /** Scroll to a target element or selector smoothly. */
 export function scrollTo(target, offset = 0) {
+  if (!target) return;
+  if (typeof target === 'string') {
+    if (!target.startsWith('#') && !target.startsWith('.')) return;
+    try {
+      if (!document.querySelector(target)) return;
+    } catch {
+      return;
+    }
+  }
   if (!lenisInstance) {
     const el = typeof target === 'string' ? document.querySelector(target) : target;
     el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
-  lenisInstance.scrollTo(target, { offset, duration: 1.2 });
+  try {
+    lenisInstance.scrollTo(target, { offset, duration: 1.2 });
+  } catch (err) {
+    console.warn('Scroll error:', err);
+  }
 }
 
 /** Stop smooth scroll (e.g. when modal is open). */
