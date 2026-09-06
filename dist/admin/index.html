@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Admin Panel — Hotel HMT Empire</title><meta name="robots" content="noindex, nofollow" /><script>
+ (function(){
+ try {
+ var noop = function(){};
+ var methods = ['log','info','warn','error','debug','trace','table','dir','assert','group','groupCollapsed','groupEnd','time','timeEnd','timeLog'];
+ for (var i = 0; i < methods.length; i++) { if (window.console && window.console[methods[i]]) window.console[methods[i]] = noop; }
+ document.addEventListener('contextmenu', function(e){ if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') e.preventDefault(); });
+ document.addEventListener('keydown', function(e){
+ if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+ if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.metaKey && e.altKey && (e.key === 'i' || e.key === 'j' || e.key === 'c'))) {
+ e.preventDefault();
+ }
+ });
+ } catch(e){}
+ })();
+ </script><script>
+ (function () {
+ const saved = localStorage.getItem('hmt_theme');
+ if (saved) document.documentElement.setAttribute('data-theme', saved);
+ })();
+ </script><script type="importmap">
+ {
+ "imports": {
+ "firebase/app": "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js",
+ "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js",
+ "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js",
+ "firebase/storage": "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js"
+ }
+ }
+ </script><script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script><link rel="stylesheet" href="../css/admin.bundle.min.css" /></head><body><div id="admin-login"><div class="admin-login__card"><div class="admin-login__logo"><div class="admin-login__name">Hotel HMT Empire</div><div class="admin-login__badge">🔒 Admin Panel</div></div><form id="login-form" class="admin-login__form" novalidate><div class="admin-login__error" id="login-error"></div><div class="form-field"><label class="form-label" for="login-email">Email Address</label><input class="form-input" type="email" id="login-email"
+ autocomplete="email" required placeholder="admin@hotelhmtempire.com" /></div><div class="form-field"><label class="form-label" for="login-password">Password</label><input class="form-input" type="password" id="login-password"
+ autocomplete="current-password" required placeholder="••••••••" /></div><button type="submit" class="btn btn--primary" id="login-btn" style="width:100%; margin-top:var(--sp-2)">
+ Sign In
+ </button></form><p style="font-size:var(--fs-xs); color:var(--clr-text-muted); text-align:center; margin-top:var(--sp-4)"><a href="../" style="color:var(--clr-gold)">← Back to website</a></p></div></div><div id="admin-dashboard" hidden><aside class="admin__sidebar"><div class="admin__sidebar-header"><div class="admin__sidebar-logo">HMT Empire</div><div class="admin__sidebar-subtitle">Admin Panel</div></div><nav class="admin__nav" aria-label="Admin navigation"><button class="admin__nav-btn is-active" data-tab="bookings" id="nav-bookings"><span class="admin__nav-icon">📅</span> Bookings
+ </button><button class="admin__nav-btn" data-tab="rooms" id="nav-rooms"><span class="admin__nav-icon">🛏️</span> Rooms
+ </button><button class="admin__nav-btn" data-tab="menu" id="nav-menu"><span class="admin__nav-icon">🍽️</span> Menu
+ </button><button class="admin__nav-btn" data-tab="rfq" id="nav-rfq"><span class="admin__nav-icon">📋</span> Enquiries
+ </button></nav><div class="admin__sidebar-footer"><button class="admin__signout-btn" id="signout-btn">Sign Out</button></div></aside><main class="admin__main"><div class="admin__tab-panel is-active" id="tab-bookings"><div class="admin__panel-header"><h1 class="admin__panel-title">Bookings</h1><div id="bookings-count" style="font-size:var(--fs-sm); color:var(--clr-text-muted)"></div></div><div id="bookings-table-wrap"></div></div><div class="admin__tab-panel" id="tab-rooms"><div class="admin__panel-header"><h1 class="admin__panel-title">Rooms</h1><button class="btn btn--primary btn--sm" id="add-room-btn">+ Add Room</button></div><div id="rooms-table-wrap"></div></div><div class="admin__tab-panel" id="tab-menu"><div class="admin__panel-header"><h1 class="admin__panel-title">Menu Items</h1><button class="btn btn--primary btn--sm" id="add-menu-btn">+ Add Item</button></div><div id="menu-table-wrap"></div></div><div class="admin__tab-panel" id="tab-rfq"><div class="admin__panel-header"><h1 class="admin__panel-title">Enquiries (RFQ)</h1><div id="rfq-count" style="font-size:var(--fs-sm); color:var(--clr-text-muted)"></div></div><div id="rfq-table-wrap"></div></div></main></div><script type="module" src="../js/admin/admin-auth.js"></script></body></html>

@@ -1,0 +1,342 @@
+/*
+ * base.css — Hotel HMT Empire
+ * Imports all design tokens, sets global body styles,
+ * theme transitions, and shared utility classes.
+ *
+ * Load order in index.html:
+ *   1. reset.css
+ *   2. base.css  ← this file (imports all tokens internally)
+ *   3. layout.css
+ *   4. components/*.css
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Import All Design Tokens ───────────────────────────────────────── */
+@import url('./tokens/colors.css');
+@import url('./tokens/typography.css');
+@import url('./tokens/spacing.css');
+@import url('./tokens/shadows.css');
+@import url('./tokens/z-index.css');
+@import url('./tokens/motion.css');
+
+/* ── Google Fonts ───────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+/* ── Global Theme Transition ────────────────────────────────────────── */
+/* Applied to every element so dark↔light switch is smooth              */
+*, *::before, *::after {
+  transition: var(--theme-transition);
+}
+
+/* ── HTML & Body Base Styles ────────────────────────────────────────── */
+html {
+  scroll-behavior:  auto; /* Sync with Lenis smooth scroll */
+}
+
+body {
+  overflow-x:       hidden;
+  max-width:        100%;
+  font-family:      var(--font-body);
+  font-size:        var(--fs-base);
+  font-weight:      var(--fw-regular);
+  line-height:      var(--lh-normal);
+  color:            var(--clr-text-primary);
+  background-color: var(--clr-bg-primary);
+}
+
+body.modal-open {
+  overflow: hidden !important;
+}
+
+/* ── Typography Defaults ────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family:  var(--font-display);
+  font-weight:  var(--fw-medium);
+  line-height:  var(--lh-tight);
+  color:        var(--clr-text-primary);
+}
+
+p {
+  color: var(--clr-text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+strong, b {
+  font-weight: var(--fw-semibold);
+}
+
+small {
+  font-size: var(--fs-xs);
+  color:     var(--clr-text-muted);
+}
+
+/* ── Anchor Scroll Margin (for sticky nav offset) ───────────────────── */
+section[id] {
+  scroll-margin-top: var(--sp-nav-h);
+}
+
+/* ── Focus Ring (Accessibility) ─────────────────────────────────────── */
+:focus-visible {
+  outline:        2px solid var(--clr-gold);
+  outline-offset: 3px;
+  border-radius:  var(--radius-sm);
+}
+
+/* ── Eyebrow / Category Labels ──────────────────────────────────────── */
+.eyebrow {
+  display:        block;
+  font-family:    var(--font-body);
+  font-size:      var(--fs-eyebrow);
+  font-weight:    var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color:          var(--clr-gold);
+  margin-bottom:  var(--sp-3);
+}
+
+/* ── Section Headings ───────────────────────────────────────────────── */
+.section-heading {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-4xl);
+  font-weight:    var(--fw-medium);
+  line-height:    var(--lh-tight);
+  color:          var(--clr-text-primary);
+  margin-bottom:  var(--sp-4);
+}
+
+.section-subheading {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-lg);
+  font-weight:    var(--fw-light);
+  line-height:    var(--lh-relaxed);
+  color:          var(--clr-text-muted);
+  max-width:      60ch;
+}
+
+/* ── Gold Accent Line (decorative) ──────────────────────────────────── */
+.gold-line {
+  display:    block;
+  width:      3rem;
+  height:     2px;
+  background: var(--gradient-gold);
+  margin:     var(--sp-4) 0;
+  border-radius: var(--radius-pill);
+}
+
+.gold-line--center {
+  margin-left:  auto;
+  margin-right: auto;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--sp-2);
+  height:          var(--dim-btn-h);
+  padding:         0 var(--sp-6);
+  font-family:     var(--font-body);
+  font-size:       var(--fs-sm);
+  font-weight:     var(--fw-semibold);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  white-space:     nowrap;
+  user-select:     none;
+  position:        relative;
+  overflow:        hidden;
+}
+
+/* Primary — gold filled */
+.btn--primary {
+  background:   var(--gradient-gold);
+  color:        var(--clr-text-on-accent);
+  border:       none;
+  box-shadow:   var(--shadow-gold-sm);
+}
+.btn--primary:hover {
+  transform:    translateY(-2px);
+  box-shadow:   var(--shadow-gold-md);
+}
+.btn--primary:active {
+  transform:    translateY(0);
+  box-shadow:   var(--shadow-gold-sm);
+}
+
+/* Secondary — outlined gold */
+.btn--secondary {
+  background:   transparent;
+  color:        var(--clr-gold);
+  border:       1px solid var(--clr-gold-border);
+}
+.btn--secondary:hover {
+  background:   var(--clr-gold-dim);
+  border-color: var(--clr-gold);
+  transform:    translateY(-2px);
+}
+.btn--secondary:active {
+  transform: translateY(0);
+}
+
+/* Ghost — minimal */
+.btn--ghost {
+  background:   transparent;
+  color:        var(--clr-text-secondary);
+  border:       1px solid var(--clr-border-subtle);
+}
+.btn--ghost:hover {
+  background:   var(--clr-bg-glass);
+  border-color: var(--clr-border);
+  color:        var(--clr-text-primary);
+}
+
+/* Large variant */
+.btn--lg {
+  height:      var(--dim-btn-h-lg);
+  padding:     0 var(--sp-8);
+  font-size:   var(--fs-md);
+}
+
+/* Small variant */
+.btn--sm {
+  height:      var(--dim-btn-h-sm);
+  padding:     0 var(--sp-4);
+  font-size:   var(--fs-xs);
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity:       0.4;
+  cursor:        not-allowed;
+  pointer-events: none;
+}
+
+/* ── Form Elements ───────────────────────────────────────────────────── */
+.form-field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-1h);
+}
+
+.form-label {
+  font-size:      var(--fs-xs);
+  font-weight:    var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color:          var(--clr-text-muted);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width:            100%;
+  height:           var(--dim-input-h);
+  padding:          0 var(--sp-4);
+  font-family:      var(--font-body);
+  font-size:        var(--fs-base);
+  color:            var(--clr-text-primary);
+  background:       var(--clr-bg-input);
+  border:           1px solid var(--clr-border-input);
+  border-radius:    var(--radius-md);
+  transition:       var(--btn-transition);
+  -webkit-appearance: none;
+  appearance:       none;
+}
+
+.form-textarea {
+  height:   auto;
+  min-height: 8rem;
+  padding:  var(--sp-4);
+  line-height: var(--lh-relaxed);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  background:   var(--clr-bg-input-focus);
+  border-color: var(--clr-gold);
+  box-shadow:   var(--shadow-focus);
+  outline:      none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--clr-text-muted);
+}
+
+.form-error {
+  font-size: var(--fs-xs);
+  color:     var(--clr-error);
+  display:   none;
+}
+
+.form-field--error .form-error {
+  display: block;
+}
+
+.form-field--error .form-input,
+.form-field--error .form-select,
+.form-field--error .form-textarea {
+  border-color: var(--clr-error);
+  box-shadow:   0 0 0 3px var(--clr-error-bg);
+}
+
+/* ── Glassmorphism Card ───────────────────────────────────────────────── */
+.glass-card {
+  background:    var(--clr-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border:        1px solid var(--clr-border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow:    var(--shadow-card);
+  transition:    var(--hover-transition);
+}
+
+.glass-card:hover {
+  background:    var(--clr-bg-glass-hover);
+  box-shadow:    var(--shadow-card-hover);
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────── */
+.divider {
+  width:      100%;
+  height:     1px;
+  background: var(--clr-border-subtle);
+  border:     none;
+}
+
+/* ── Loading Spinner ─────────────────────────────────────────────────── */
+.spinner {
+  width:  1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--clr-border-subtle);
+  border-top-color: var(--clr-gold);
+  border-radius: var(--radius-circle);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Status Badges ───────────────────────────────────────────────────── */
+.status {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            var(--sp-1);
+  padding:        var(--sp-1) var(--sp-3);
+  font-size:      var(--fs-xs);
+  font-weight:    var(--fw-semibold);
+  border-radius:  var(--radius-pill);
+  text-transform: capitalize;
+}
+
+.status--success  { color: var(--clr-success);  background: var(--clr-success-bg);  }
+.status--warning  { color: var(--clr-warning);  background: var(--clr-warning-bg);  }
+.status--error    { color: var(--clr-error);    background: var(--clr-error-bg);    }
+.status--info     { color: var(--clr-info);     background: var(--clr-info-bg);     }
+.status--muted    { color: var(--clr-text-muted); background: var(--clr-bg-glass);  }

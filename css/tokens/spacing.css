@@ -1,0 +1,87 @@
+/*
+ * spacing.css — Hotel HMT Empire
+ * Equivalent to Android's res/values/dimens.xml (layout-specific)
+ * ALL spacing values live here. Zero hardcoded px/rem in component files.
+ * Based on a 4px (0.25rem) grid.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* ── Base Scale (4px grid) ──────────────────────────────────────── */
+  --sp-0:    0;
+  --sp-px:   1px;
+  --sp-0h:   0.125rem;  /*  2px  */
+  --sp-1:    0.25rem;   /*  4px  */
+  --sp-1h:   0.375rem;  /*  6px  */
+  --sp-2:    0.5rem;    /*  8px  */
+  --sp-2h:   0.625rem;  /* 10px  */
+  --sp-3:    0.75rem;   /* 12px  */
+  --sp-3h:   0.875rem;  /* 14px  */
+  --sp-4:    1rem;      /* 16px  */
+  --sp-5:    1.25rem;   /* 20px  */
+  --sp-6:    1.5rem;    /* 24px  */
+  --sp-7:    1.75rem;   /* 28px  */
+  --sp-8:    2rem;      /* 32px  */
+  --sp-9:    2.25rem;   /* 36px  */
+  --sp-10:   2.5rem;    /* 40px  */
+  --sp-11:   2.75rem;   /* 44px  */
+  --sp-12:   3rem;      /* 48px  */
+  --sp-14:   3.5rem;    /* 56px  */
+  --sp-16:   4rem;      /* 64px  */
+  --sp-18:   4.5rem;    /* 72px  */
+  --sp-20:   5rem;      /* 80px  */
+  --sp-24:   6rem;      /* 96px  */
+  --sp-28:   7rem;      /* 112px */
+  --sp-32:   8rem;      /* 128px */
+  --sp-40:   10rem;     /* 160px */
+  --sp-48:   12rem;     /* 192px */
+
+  /* ── Semantic Spacing (fluid) ───────────────────────────────────── */
+  /* Sections */
+  --sp-section-y:      clamp(4rem,  8vw,  8rem);    /* section vertical padding */
+  --sp-section-y-sm:   clamp(2.5rem, 5vw, 5rem);   /* smaller sections */
+  --sp-section-x:      clamp(1rem,   5vw, 6rem);    /* section horizontal padding (page gutter) */
+
+  /* Containers */
+  --sp-container-max:  1440px;    /* max page width */
+  --sp-container-pad:  clamp(1rem, 4vw, 4rem);
+
+  /* Cards */
+  --sp-card-pad:       clamp(1.25rem, 2.5vw, 2rem);
+  --sp-card-gap:       clamp(1rem,    2.5vw, 2rem);
+
+  /* Navbar */
+  --sp-nav-h:          4.5rem;    /* 72px — navbar height */
+  --sp-nav-h-mobile:   3.75rem;   /* 60px — mobile navbar */
+
+  /* Grids */
+  --sp-grid-gap:       clamp(1rem, 2.5vw, 2rem);
+  --sp-grid-gap-sm:    clamp(0.75rem, 1.5vw, 1.25rem);
+
+  /* ── Border Radius ──────────────────────────────────────────────── */
+  --radius-none:   0;
+  --radius-xs:     0.125rem;   /*  2px */
+  --radius-sm:     0.25rem;    /*  4px */
+  --radius-md:     0.5rem;     /*  8px */
+  --radius-lg:     0.75rem;    /* 12px */
+  --radius-xl:     1rem;       /* 16px */
+  --radius-2xl:    1.5rem;     /* 24px */
+  --radius-3xl:    2rem;       /* 32px */
+  --radius-pill:   9999px;
+  --radius-circle: 50%;
+
+  /* ── Specific Component Dimensions ─────────────────────────────── */
+  --dim-btn-h:          2.75rem;    /* button height */
+  --dim-btn-h-sm:       2.25rem;    /* small button height */
+  --dim-btn-h-lg:       3.25rem;    /* large button height */
+  --dim-input-h:        3rem;       /* form input height */
+  --dim-room-card-w:    clamp(280px, 35vw, 480px);  /* room card width */
+  --dim-room-card-h:    clamp(380px, 55vh, 580px);  /* room card height */
+  --dim-modal-w:        clamp(320px, 90vw, 680px);  /* booking modal width */
+  --dim-fab-size:       3.5rem;     /* floating action button */
+  --dim-fab-size-mobile: 3rem;
+  --dim-avatar:         3rem;       /* profile/review avatar */
+
+  /* ── Scroll & Sticky ────────────────────────────────────────────── */
+  --sp-scroll-margin:   5rem;  /* offset for sticky nav when anchor-linking */
+}

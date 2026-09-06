@@ -1,0 +1,157 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper Functions ──────────────────────────────────────────────
+
+    // Is the request from a signed-in admin?
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // Is the request from a verified non-bot (basic check)?
+    function isValidRequest() {
+      return request.time != null;
+    }
+
+    // Validate phone (10 digit Indian mobile)
+    function isValidPhone(phone) {
+      return phone is string &&
+             phone.size() == 10 &&
+             phone.matches('^[6-9][0-9]{9}$');
+    }
+
+    // Validate email (basic)
+    function isValidEmail(email) {
+      return email is string && email.size() > 5 && email.size() < 200;
+    }
+
+    // Prevent field-length abuse
+    function fieldWithinLimit(field, limit) {
+      return field is string && field.size() <= limit;
+    }
+
+
+    // ── ROOMS ─────────────────────────────────────────────────────────
+    // Public: anyone can read available rooms
+    // Write: admin only
+    match /rooms/{roomId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+
+    // ── BOOKINGS ──────────────────────────────────────────────────────
+    // Public: anyone can CREATE a booking (with validation)
+    // Read/Update/Delete: admin only
+    match /bookings/{bookingId} {
+      allow read, update, delete: if isAdmin();
+
+      allow create: if
+        isValidRequest() &&
+
+        // Required fields present
+        request.resource.data.keys().hasAll([
+          'bookingId', 'guestName', 'guestPhone', 'checkIn', 'checkOut',
+          'guests', 'roomType', 'status', 'source', 'createdAt'
+        ]) &&
+
+        // Validate guest name
+        fieldWithinLimit(request.resource.data.guestName, 100) &&
+        request.resource.data.guestName.size() >= 2 &&
+
+        // Validate phone
+        isValidPhone(request.resource.data.guestPhone) &&
+
+        // Validate dates are strings
+        request.resource.data.checkIn is string &&
+        request.resource.data.checkOut is string &&
+
+        // Validate guests count
+        request.resource.data.guests is int &&
+        request.resource.data.guests >= 1 &&
+        request.resource.data.guests <= 10 &&
+
+        // Status must be 'pending' on create (cannot self-confirm)
+        request.resource.data.status == 'pending' &&
+
+        // Source must be website
+        request.resource.data.source == 'website' &&
+
+        // Notes field length limit
+        (
+          !('notes' in request.resource.data) ||
+          fieldWithinLimit(request.resource.data.notes, 500)
+        ) &&
+
+        // Booking ID format: HMT-YYYYMMDD-XXXXX (max 25 chars)
+        fieldWithinLimit(request.resource.data.bookingId, 25);
+    }
+
+
+    // ── MENU ITEMS ────────────────────────────────────────────────────
+    // Public: read only
+    // Write: admin only
+    match /menu_items/{itemId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+
+    // ── RFQ ENQUIRIES ─────────────────────────────────────────────────
+    // Public: can CREATE (with validation + rate limit enforced client-side)
+    // Read/Update/Delete: admin only
+    match /rfq_enquiries/{rfqId} {
+      allow read, update, delete: if isAdmin();
+
+      allow create: if
+        isValidRequest() &&
+
+        request.resource.data.keys().hasAll([
+          'refId', 'name', 'phone', 'eventType', 'status', 'source', 'createdAt'
+        ]) &&
+
+        // Validate contact info
+        fieldWithinLimit(request.resource.data.name, 100) &&
+        request.resource.data.name.size() >= 2 &&
+        isValidPhone(request.resource.data.phone) &&
+
+        // Status must be 'new' on create
+        request.resource.data.status == 'new' &&
+        request.resource.data.source == 'website' &&
+
+        // Notes limit
+        (
+          !('notes' in request.resource.data) ||
+          fieldWithinLimit(request.resource.data.notes, 2000)
+        );
+    }
+
+
+    // ── NEWSLETTER SUBSCRIBERS ────────────────────────────────────────
+    // Public: can CREATE (email subscribe)
+    // Read/Delete: admin only
+    match /newsletter_subscribers/{subId} {
+      allow read, delete: if isAdmin();
+
+      allow create: if
+        isValidRequest() &&
+        request.resource.data.keys().hasAll(['email', 'subscribedAt', 'source']) &&
+        isValidEmail(request.resource.data.email);
+    }
+
+
+    // ── BANQUET REQUESTS ──────────────────────────────────────────────
+    match /banquet_requests/{reqId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isValidRequest();
+    }
+
+
+    // ── DENY ALL ELSE ─────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+  }
+}

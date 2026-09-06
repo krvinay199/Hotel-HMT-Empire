@@ -1,0 +1,334 @@
+/*
+ * restaurant.css — Hotel HMT Empire
+ * Animated tabbed menu cards with WhatsApp ordering.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+#dining {
+  background: var(--clr-bg-primary);
+}
+
+/* ── Category Tabs ───────────────────────────────────────────────────── */
+.dining__tabs {
+  display:         flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  background:      var(--clr-bg-glass);
+  border:          1px solid var(--clr-border-subtle);
+  border-radius:   var(--radius-pill);
+  padding:         var(--sp-1h);
+  width:           fit-content;
+  margin-bottom:   var(--sp-12);
+}
+
+.dining__tab {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  height:          2.5rem;
+  padding:         0 var(--sp-6);
+  font-family:     var(--font-body);
+  font-size:       var(--fs-sm);
+  font-weight:     var(--fw-medium);
+  color:           var(--clr-text-muted);
+  border-radius:   var(--radius-pill);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  white-space:     nowrap;
+  border:          none;
+  background:      transparent;
+}
+
+.dining__tab:hover {
+  color: var(--clr-text-primary);
+  background: var(--clr-bg-glass-hover);
+}
+
+.dining__tab.is-active {
+  background: var(--gradient-gold);
+  color:      var(--clr-text-inverse);
+  box-shadow: var(--shadow-gold-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.dining__tab-icon {
+  font-size: var(--fs-base);
+}
+
+/* ── Menu Grid ───────────────────────────────────────────────────────── */
+.dining__carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.dining__grid-wrapper {
+  overflow-x:                  auto;
+  overflow-y:                  hidden;
+  scroll-snap-type:            x mandatory;
+  -webkit-overflow-scrolling:  touch;
+  scrollbar-width:             none; /* Hide scrollbar on Firefox */
+}
+
+.dining__grid-wrapper::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on Chrome/Safari */
+}
+
+.dining__grid {
+  display:               flex !important;
+  flex-direction:        row !important;
+  gap:                   var(--sp-6) !important;
+  padding:               var(--sp-2) 0 var(--sp-6) 0 !important; /* Bottom padding prevents shadow cutoff */
+}
+
+/* Dining Carousel Controls */
+.dining__arrow {
+  position:        absolute;
+  top:             50%;
+  transform:       translateY(-50%);
+  width:           3.25rem;
+  height:          3.25rem;
+  border-radius:   var(--radius-circle);
+  background:      rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border:          1px solid var(--clr-border);
+  color:           var(--clr-text-primary);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  z-index:         10;
+  transition:      all var(--dur-normal) var(--ease-out);
+  opacity:         0;
+  pointer-events:  none;
+  padding:         0;
+}
+
+[data-theme="light"] .dining__arrow {
+  background: rgba(250, 247, 242, 0.8);
+}
+
+.dining__carousel-container:hover .dining__arrow {
+  opacity:         1;
+  pointer-events:  auto;
+}
+
+.dining__arrow:hover {
+  background:   var(--clr-gold);
+  border-color: transparent;
+  color:        var(--clr-text-inverse);
+  box-shadow:   var(--shadow-gold-sm);
+  transform:    translateY(-50%) scale(1.1);
+}
+
+.dining__arrow--prev {
+  left: calc(-1 * var(--sp-8));
+}
+
+.dining__arrow--next {
+  right: calc(-1 * var(--sp-8));
+}
+
+/* Hide arrows on touch-only devices */
+@media (hover: none), (max-width: 1023px) {
+  .dining__arrow {
+    display: none !important;
+  }
+}
+
+/* ── Menu Card ───────────────────────────────────────────────────────── */
+.menu-card {
+  background:    var(--clr-bg-card);
+  border:        1px solid var(--clr-border-subtle);
+  border-radius: var(--radius-xl);
+  overflow:      hidden;
+  box-shadow:    var(--shadow-card);
+  transition:    var(--hover-transition);
+  display:       flex;
+  flex-direction: column;
+  flex-shrink:   0 !important;
+  width:         320px !important; /* Fixed width for horizontal scrolling */
+  scroll-snap-align: start;
+}
+
+.menu-card:hover {
+  transform:  translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--clr-border);
+}
+
+/* Card Image */
+.menu-card__image-wrap {
+  position:    relative;
+  aspect-ratio: 4 / 3;
+  overflow:    hidden;
+  background:  var(--clr-bg-glass);
+}
+
+.menu-card__image {
+  width:       100%;
+  height:      100%;
+  object-fit:  cover;
+  transition:  transform var(--dur-slow) var(--ease-luxury);
+}
+
+.menu-card:hover .menu-card__image {
+  transform: scale(1.06);
+}
+
+/* Badges */
+.menu-card__badges {
+  position: absolute;
+  top:      var(--sp-3);
+  left:     var(--sp-3);
+  display:  flex;
+  gap:      var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.menu-card__badge {
+  padding:        var(--sp-0h) var(--sp-2h);
+  font-size:      var(--fs-2xs);
+  font-weight:    var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  border-radius:  var(--radius-pill);
+  backdrop-filter: blur(6px);
+}
+
+.menu-card__badge--veg {
+  background: rgba(39, 104, 67, 0.85);
+  color:      #FFF;
+  border:     1px solid rgba(76, 175, 124, 0.5);
+}
+
+.menu-card__badge--nonveg {
+  background: rgba(184, 50, 50, 0.85);
+  color:      #FFF;
+  border:     1px solid rgba(224, 92, 92, 0.5);
+}
+
+.menu-card__badge--chef {
+  background: rgba(201, 168, 76, 0.85);
+  color:      #000;
+  border:     1px solid rgba(201, 168, 76, 0.5);
+}
+
+/* Card Body */
+.menu-card__body {
+  padding:        var(--sp-card-pad);
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-3);
+}
+
+.menu-card__name {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl);
+  font-weight:    var(--fw-medium);
+  color:          var(--clr-text-primary);
+  line-height:    var(--lh-snug);
+}
+
+.menu-card__description {
+  font-size:   var(--fs-sm);
+  color:       var(--clr-text-muted);
+  line-height: var(--lh-relaxed);
+  flex:        1;
+}
+
+/* Price + Order row */
+.menu-card__footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding-top:     var(--sp-4);
+  border-top:      1px solid var(--clr-border-subtle);
+  gap:             var(--sp-4);
+}
+
+.menu-card__price {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl);
+  font-weight:    var(--fw-medium);
+  color:          var(--clr-gold);
+}
+
+.menu-card__order-btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  height:          2.25rem;
+  padding:         0 var(--sp-4);
+  background:      var(--clr-whatsapp-bg);
+  color:           var(--clr-whatsapp);
+  border:          1px solid var(--clr-whatsapp);
+  border-radius:   var(--radius-pill);
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-semibold);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  white-space:     nowrap;
+  text-decoration: none;
+}
+
+.menu-card__order-btn:hover {
+  background: var(--clr-whatsapp);
+  color:      #FFF;
+  box-shadow: var(--shadow-whatsapp);
+  transform:  translateY(-2px);
+}
+
+/* ── Time Badge (show meal times) ────────────────────────────────────── */
+.dining__time-badge {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  padding:         var(--sp-1h) var(--sp-4);
+  background:      var(--clr-bg-glass);
+  border:          1px solid var(--clr-border-subtle);
+  border-radius:   var(--radius-pill);
+  font-size:       var(--fs-xs);
+  color:           var(--clr-text-muted);
+  margin-bottom:   var(--sp-8);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .dining__tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .dining__tabs::-webkit-scrollbar { display: none; }
+}
+
+/* Make dining card grid a horizontal swipeable slider on mobile/tablets */
+@media (max-width: 767px) {
+  .dining__grid {
+    display:               flex !important;
+    flex-direction:        row !important;
+    overflow-x:            auto !important;
+    scroll-snap-type:      x mandatory !important;
+    gap:                   var(--sp-4) !important;
+    padding:               var(--sp-2) var(--sp-6) var(--sp-6) !important;
+    margin:                0 calc(-1 * var(--sp-6)) !important; /* Bleed edge-to-edge on screens */
+    scrollbar-width:       none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .dining__grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .dining__grid .menu-card {
+    flex-shrink:           0 !important;
+    width:                 280px !important; /* Compact fixed card width for sliding */
+    scroll-snap-align:     start !important;
+  }
+}
+

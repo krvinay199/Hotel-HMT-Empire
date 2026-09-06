@@ -1,0 +1,212 @@
+/*
+ * banquet.css — Hotel HMT Empire
+ * Banquet planner with seating layout visualizer.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+#banquet {
+  background: var(--clr-bg-secondary);
+  overflow:   hidden;
+}
+
+/* ── Two-column layout ───────────────────────────────────────────────── */
+.banquet__grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   clamp(3rem, 6vw, 6rem);
+  align-items:           start;
+}
+
+/* ── Left: Info column ───────────────────────────────────────────────── */
+.banquet__info {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--sp-8);
+}
+
+/* Capacity highlight card */
+.banquet__capacity-card {
+  background:    var(--clr-gold-dim);
+  border:        1px solid var(--clr-gold-border);
+  border-radius: var(--radius-xl);
+  padding:       var(--sp-8);
+  text-align:    center;
+}
+
+.banquet__capacity-number {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-4xl);
+  font-weight:    var(--fw-light);
+  color:          var(--clr-gold);
+  line-height:    var(--lh-none);
+}
+
+.banquet__capacity-label {
+  font-size:      var(--fs-sm);
+  color:          var(--clr-text-muted);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  margin-top:     var(--sp-2);
+}
+
+/* Layout selector */
+.banquet__layout-label {
+  font-size:      var(--fs-xs);
+  font-weight:    var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color:          var(--clr-text-muted);
+  margin-bottom:  var(--sp-4);
+}
+
+.banquet__layouts {
+  display:  flex;
+  flex-wrap: wrap;
+  gap:      var(--sp-3);
+}
+
+.banquet__layout-btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  height:          2.75rem;
+  padding:         0 var(--sp-5);
+  background:      var(--clr-bg-glass);
+  border:          1px solid var(--clr-border-subtle);
+  border-radius:   var(--radius-md);
+  font-size:       var(--fs-sm);
+  color:           var(--clr-text-secondary);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+}
+
+.banquet__layout-btn:hover {
+  border-color: var(--clr-border);
+  color:        var(--clr-text-primary);
+  background:   var(--clr-bg-glass-hover);
+}
+
+.banquet__layout-btn.is-active {
+  background:   var(--clr-gold-dim);
+  border-color: var(--clr-gold);
+  color:        var(--clr-gold);
+  box-shadow:   var(--shadow-gold-sm);
+}
+
+/* Layout description */
+.banquet__layout-description {
+  font-size:   var(--fs-sm);
+  color:       var(--clr-text-muted);
+  line-height: var(--lh-relaxed);
+  padding:     var(--sp-4);
+  background:  var(--clr-bg-glass);
+  border-radius: var(--radius-md);
+  border-left:  3px solid var(--clr-gold);
+  min-height:  5rem;
+  transition:  var(--hover-transition);
+}
+
+/* CTA */
+.banquet__ctas {
+  display: flex;
+  gap:     var(--sp-4);
+  flex-wrap: wrap;
+}
+
+/* ── Right: SVG Layout Visualizer ────────────────────────────────────── */
+.banquet__visualizer {
+  position:      sticky;
+  top:           calc(var(--sp-nav-h) + var(--sp-8));
+  background:    var(--clr-bg-card);
+  border:        1px solid var(--clr-border-subtle);
+  border-radius: var(--radius-2xl);
+  padding:       var(--sp-8);
+  box-shadow:    var(--shadow-card);
+}
+
+.banquet__visualizer-title {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl);
+  color:          var(--clr-text-primary);
+  margin-bottom:  var(--sp-6);
+  text-align:     center;
+}
+
+/* SVG container */
+.banquet__svg-container {
+  width:         100%;
+  aspect-ratio:  4 / 3;
+  background:    var(--clr-bg-secondary);
+  border-radius: var(--radius-lg);
+  border:        1px solid var(--clr-border-subtle);
+  overflow:      hidden;
+  position:      relative;
+}
+
+.banquet__svg {
+  width:  100%;
+  height: 100%;
+}
+
+/* SVG elements */
+.svg-stage {
+  fill:   var(--clr-gold-dim);
+  stroke: var(--clr-gold);
+  stroke-width: 1;
+}
+
+.svg-table-round {
+  fill:   var(--clr-bg-glass);
+  stroke: var(--clr-gold-border);
+  stroke-width: 1;
+  transition: var(--hover-transition);
+}
+
+.svg-table-round:hover {
+  fill: var(--clr-gold-dim);
+}
+
+.svg-chair {
+  fill:   var(--clr-text-muted);
+  opacity: 0.5;
+}
+
+.svg-row-line {
+  fill:   var(--clr-bg-glass);
+  stroke: var(--clr-border-subtle);
+  stroke-width: 0.5;
+}
+
+.svg-label {
+  fill:         var(--clr-gold);
+  font-family:  var(--font-body);
+  font-size:    8px;
+  text-anchor:  middle;
+}
+
+/* Capacity counter in visualizer */
+.banquet__viz-capacity {
+  text-align:     center;
+  margin-top:     var(--sp-4);
+  font-size:      var(--fs-sm);
+  color:          var(--clr-text-muted);
+}
+
+.banquet__viz-capacity strong {
+  color:       var(--clr-gold);
+  font-family: var(--font-display);
+  font-size:   var(--fs-xl);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .banquet__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banquet__visualizer {
+    position: relative;
+    top:      0;
+    order:    -1;
+  }
+}

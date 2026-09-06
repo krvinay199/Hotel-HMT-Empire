@@ -1,0 +1,363 @@
+/*
+ * rooms.css — Hotel HMT Empire
+ * Horizontal room slider with filter pills.
+ * ─────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Section ─────────────────────────────────────────────────────────── */
+#rooms {
+  background: var(--clr-bg-secondary);
+  overflow:   hidden;
+}
+
+/* ── Filter Pill Bar ─────────────────────────────────────────────────── */
+.rooms__filters {
+  display:         flex;
+  align-items:     center;
+  gap:             var(--sp-3);
+  flex-wrap:       wrap;
+  margin-bottom:   var(--sp-10);
+}
+
+.rooms__filter-pill {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-2);
+  height:          2.25rem;
+  padding:         0 var(--sp-5);
+  font-family:     var(--font-body);
+  font-size:       var(--fs-xs);
+  font-weight:     var(--fw-medium);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+  color:           var(--clr-text-muted);
+  background:      var(--clr-bg-glass);
+  border:          1px solid var(--clr-border-subtle);
+  border-radius:   var(--radius-pill);
+  cursor:          pointer;
+  transition:      var(--btn-transition);
+  white-space:     nowrap;
+}
+
+.rooms__filter-pill:hover {
+  color:        var(--clr-text-primary);
+  border-color: var(--clr-border);
+  background:   var(--clr-bg-glass-hover);
+}
+
+.rooms__filter-pill.is-active {
+  color:        var(--clr-bg-primary);
+  background:   var(--gradient-gold);
+  border-color: transparent;
+  box-shadow:   var(--shadow-gold-sm);
+}
+
+/* ── Horizontal Scroll Track ─────────────────────────────────────────── */
+.rooms__carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.rooms__track-wrapper {
+  overflow-x:                  auto;
+  overflow-y:                  hidden;
+  scroll-snap-type:            x mandatory;
+  -webkit-overflow-scrolling:  touch;
+  scrollbar-width:             none; /* Hide default scrollbar on Firefox */
+}
+
+.rooms__track-wrapper::-webkit-scrollbar {
+  display: none; /* Hide default scrollbar on Chrome/Safari */
+}
+
+.rooms__track {
+  display:        flex;
+  gap:            var(--sp-6);
+  padding-left:   var(--sp-section-x);
+  padding-right:  var(--sp-section-x);
+  scroll-padding-left: var(--sp-section-x);
+}
+
+/* Carousel Control Arrows */
+.rooms__arrow {
+  position:        absolute;
+  top:             50%;
+  transform:       translateY(-50%);
+  width:           3.25rem;
+  height:          3.25rem;
+  border-radius:   var(--radius-circle);
+  background:      rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border:          1px solid var(--clr-border);
+  color:           var(--clr-text-primary);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  z-index:         10;
+  transition:      all var(--dur-normal) var(--ease-out);
+  opacity:         0;
+  pointer-events:  none;
+  padding:         0;
+}
+
+[data-theme="light"] .rooms__arrow {
+  background: rgba(250, 247, 242, 0.8);
+}
+
+.rooms__carousel-container:hover .rooms__arrow {
+  opacity:         1;
+  pointer-events:  auto;
+}
+
+.rooms__arrow:hover {
+  background:   var(--clr-gold);
+  border-color: transparent;
+  color:        var(--clr-text-inverse);
+  box-shadow:   var(--shadow-gold-sm);
+  transform:    translateY(-50%) scale(1.1);
+}
+
+.rooms__arrow--prev {
+  left: var(--sp-6);
+}
+
+.rooms__arrow--next {
+  right: var(--sp-6);
+}
+
+/* Hide arrows on touch-only devices where native swiping is used */
+@media (hover: none), (max-width: 1023px) {
+  .rooms__arrow {
+    display: none !important;
+  }
+}
+
+/* ── Room Card ───────────────────────────────────────────────────────── */
+.room-card {
+  flex-shrink:     0;
+  width:           var(--dim-room-card-w);
+  height:          var(--dim-room-card-h);
+  border-radius:   var(--radius-2xl);
+  overflow:        hidden;
+  position:        relative;
+  cursor:          pointer;
+  box-shadow:      var(--shadow-card);
+  transition:      var(--hover-transition);
+  user-select:     none;
+  scroll-snap-align: start;
+}
+
+.room-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Room Image */
+.room-card__image {
+  position:    absolute;
+  inset:       0;
+  width:       100%;
+  height:      100%;
+  object-fit:  cover;
+  object-position: center;
+  transition:  transform var(--dur-slow) var(--ease-luxury);
+}
+
+.room-card:hover .room-card__image {
+  transform: scale(1.06);
+}
+
+/* Gradient overlay on card */
+.room-card__overlay {
+  position:   absolute;
+  inset:      0;
+  background: var(--gradient-card);
+  z-index:    var(--z-raised);
+}
+
+/* Content at card bottom */
+.room-card__content {
+  position: absolute;
+  bottom:   0;
+  left:     0;
+  right:    0;
+  z-index:  var(--z-raised);
+  padding:  var(--sp-card-pad);
+  display:  flex;
+  flex-direction: column;
+  gap:      var(--sp-3);
+}
+
+/* Room type eyebrow */
+.room-card__type {
+  font-family:    var(--font-body);
+  font-size:      var(--fs-2xs);
+  font-weight:    var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color:          var(--clr-gold);
+}
+
+/* Room name */
+.room-card__name {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-2xl);
+  font-weight:    var(--fw-medium);
+  color:          #FFF;
+  line-height:    var(--lh-tight);
+  text-shadow:    var(--text-shadow-sm);
+}
+
+/* Amenity badges */
+.room-card__amenities {
+  display:  flex;
+  flex-wrap: wrap;
+  gap:      var(--sp-2);
+}
+
+.room-card__badge {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          var(--sp-1);
+  padding:      var(--sp-0h) var(--sp-2h);
+  font-size:    var(--fs-2xs);
+  color:        rgba(255,255,255,0.8);
+  background:   rgba(255,255,255,0.12);
+  border:       1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(4px);
+  white-space:  nowrap;
+}
+
+/* Price + CTA row */
+.room-card__footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             var(--sp-4);
+  padding-top:     var(--sp-3);
+  border-top:      1px solid rgba(255,255,255,0.12);
+}
+
+.room-card__price {
+  display:        flex;
+  flex-direction: column;
+}
+
+.room-card__price-amount {
+  font-family:    var(--font-display);
+  font-size:      var(--fs-xl);
+  font-weight:    var(--fw-medium);
+  color:          var(--clr-gold-light);
+  line-height:    var(--lh-tight);
+}
+
+.room-card__price-label {
+  font-size:  var(--fs-2xs);
+  color:      rgba(255,255,255,0.5);
+  letter-spacing: var(--ls-wider);
+}
+
+.room-card__book-btn {
+  /* inherits .btn .btn--primary */
+  height:   2.25rem;
+  padding:  0 var(--sp-5);
+  font-size: var(--fs-2xs);
+  flex-shrink: 0;
+}
+
+/* Unavailable state */
+.room-card.is-unavailable {
+  opacity: 0.65;
+}
+
+.room-card__book-btn:disabled {
+  background:      var(--clr-text-disabled) !important;
+  border-color:    transparent !important;
+  color:           var(--clr-text-muted) !important;
+  cursor:          not-allowed;
+  box-shadow:      none !important;
+  transform:       none !important;
+}
+
+.room-card.is-unavailable::after {
+  content:         'Unavailable';
+  position:        absolute;
+  top:             var(--sp-4);
+  right:           var(--sp-4);
+  z-index:         var(--z-overlay);
+  padding:         var(--sp-1) var(--sp-3);
+  background:      var(--clr-error-bg);
+  color:           var(--clr-error);
+  font-size:       var(--fs-2xs);
+  font-weight:     var(--fw-semibold);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+  border-radius:   var(--radius-pill);
+  border:          1px solid var(--clr-error);
+}
+
+/* ── Availability Badge (on card top-left) ───────────────────────────── */
+.room-card__available-badge {
+  position:        absolute;
+  top:             var(--sp-4);
+  left:            var(--sp-4);
+  z-index:         var(--z-overlay);
+  display:         inline-flex;
+  align-items:     center;
+  gap:             var(--sp-1h);
+  padding:         var(--sp-1) var(--sp-3);
+  background:      var(--clr-success-bg);
+  color:           var(--clr-success);
+  border:          1px solid var(--clr-success);
+  border-radius:   var(--radius-pill);
+  font-size:       var(--fs-2xs);
+  font-weight:     var(--fw-semibold);
+  letter-spacing:  var(--ls-wide);
+  text-transform:  uppercase;
+  backdrop-filter: blur(4px);
+}
+
+.room-card__available-badge::before {
+  content:       '';
+  width:         6px;
+  height:        6px;
+  border-radius: var(--radius-circle);
+  background:    var(--clr-success);
+  animation:     pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* ── Empty / Loading State ───────────────────────────────────────────── */
+.rooms__empty,
+.rooms__loading {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  gap:             var(--sp-4);
+  min-height:      300px;
+  color:           var(--clr-text-muted);
+  font-family:     var(--font-body);
+  font-size:       var(--fs-lg);
+}
+
+/* ── Responsive — horizontal swipe carousel on mobile ────────────────── */
+@media (max-width: 767px) {
+  .rooms__track {
+    padding-left:        var(--sp-6) !important;
+    padding-right:       var(--sp-6) !important;
+    scroll-padding-left: var(--sp-6) !important;
+  }
+
+  .room-card {
+    width:  280px !important; /* Compact sliding card width on mobile */
+    height: 420px !important;
+  }
+}
