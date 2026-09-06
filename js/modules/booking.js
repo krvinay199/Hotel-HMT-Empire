@@ -276,7 +276,9 @@ async function handleSubmit(e) {
       createdAt:   serverTimestamp(),
     };
 
-    await addDoc(collection(db, Config.COLLECTIONS.BOOKINGS), bookingData);
+    if (db) {
+      await addDoc(collection(db, Config.COLLECTIONS.BOOKINGS), bookingData);
+    }
 
     // Send confirmation email via EmailJS (if configured)
     if (Config.FEATURES.ENABLE_EMAILJS && window.emailjs) {

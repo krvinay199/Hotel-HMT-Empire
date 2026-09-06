@@ -75,12 +75,14 @@ function initNewsletter() {
     }
 
     try {
-      // Import Firestore lazily
+      // Import Firestore and db lazily
       const { addDoc, collection, serverTimestamp } = await import('firebase/firestore');
       const { db } = await import('./firebase-config.js');
-      await addDoc(collection(db, Config.COLLECTIONS.SUBSCRIBERS), {
-        email, subscribedAt: serverTimestamp(), source: 'website_footer',
-      });
+      if (db) {
+        await addDoc(collection(db, Config.COLLECTIONS.SUBSCRIBERS), {
+          email, subscribedAt: serverTimestamp(), source: 'website_footer',
+        });
+      }
       form.style.display = 'none';
       success && (success.style.display = 'block');
       showToast('Subscribed successfully!', 'success');

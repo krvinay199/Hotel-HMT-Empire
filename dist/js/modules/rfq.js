@@ -310,18 +310,20 @@ async function submitRFQ() {
   const refId = generateBookingId('RFQ');
 
   try {
-    await addDoc(collection(db, Config.COLLECTIONS.RFQ_ENQUIRIES), {
-      refId,
-      eventType: rfqData.eventType,
-      dateFrom:  rfqData.dateFrom,
-      dateTo:    rfqData.dateTo,
-      guests:    rfqData.guests || 50,
-      notes:     rfqData.notes  || '',
-      name, phone, email,
-      status:    'new',
-      source:    'website',
-      createdAt: serverTimestamp(),
-    });
+    if (db) {
+      await addDoc(collection(db, Config.COLLECTIONS.RFQ_ENQUIRIES), {
+        refId,
+        eventType: rfqData.eventType,
+        dateFrom:  rfqData.dateFrom,
+        dateTo:    rfqData.dateTo,
+        guests:    rfqData.guests || 50,
+        notes:     rfqData.notes  || '',
+        name, phone, email,
+        status:    'new',
+        source:    'website',
+        createdAt: serverTimestamp(),
+      });
+    }
 
     // Staff WhatsApp notification
     const waMsg = `📋 NEW RFQ\nRef: ${refId}\nEvent: ${rfqData.eventType}\nDates: ${rfqData.dateFrom} → ${rfqData.dateTo}\nGuests: ${rfqData.guests}\nContact: ${name}, ${phone}\nNotes: ${rfqData.notes?.slice(0, 100)}`;

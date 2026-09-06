@@ -14,13 +14,17 @@ const DEMO_PASSWORD = 'HMT@admin2025';
 let demoMode = false;
 
 // ── Auth State Observer ────────────────────────────────────────────────
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    showDashboard(user);
-  } else if (!demoMode) {
-    showLogin();
-  }
-});
+if (auth) {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      showDashboard(user);
+    } else if (!demoMode) {
+      showLogin();
+    }
+  });
+} else {
+  showLogin();
+}
 
 // ── Login Form ────────────────────────────────────────────────────────
 document.getElementById('login-form')?.addEventListener('submit', async (e) => {
@@ -44,6 +48,13 @@ document.getElementById('login-form')?.addEventListener('submit', async (e) => {
   if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
     demoMode = true;
     await showDashboard({ email: DEMO_EMAIL, displayName: 'Demo Admin' }, true);
+    return;
+  }
+
+  if (!auth) {
+    loginBtn.disabled    = false;
+    loginBtn.textContent = 'Sign In';
+    showError('Firebase Auth is not configured. Use Demo credentials: admin@hmtempire.com / HMT@admin2025');
     return;
   }
 
