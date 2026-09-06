@@ -16,20 +16,20 @@ resolve();
 return;
 }
 document.body.style.overflow = 'hidden';
-const MIN_DURATION = 5000;
+const MIN_DURATION = 1400;
 const startTime    = Date.now();
 let count = 0;
-const duration = 4200;
+const duration = 1000;
 const steps    = 100;
 const interval = duration / steps;
 const tick = setInterval(() => {
 count = Math.min(count + 1, 100);
-if (counter) counter.firstChild.nodeValue = count;
+if (counter && counter.firstChild) counter.firstChild.nodeValue = count;
 if (progress) progress.style.width = `${count}%`;
 if (count >= 100) {
 clearInterval(tick);
 const elapsed   = Date.now() - startTime;
-const remaining = Math.max(0, MIN_DURATION - elapsed - 400);
+const remaining = Math.max(0, MIN_DURATION - elapsed);
 setTimeout(() => exitPreloader(preloader, resolve), remaining);
 }
 }, interval);

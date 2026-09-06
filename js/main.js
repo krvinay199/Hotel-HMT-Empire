@@ -32,8 +32,11 @@ import { initExperience } from './modules/experience.js';
 // ── Wait for CDN scripts to be ready ──────────────────────────────────
 function waitForLibraries() {
   return new Promise((resolve) => {
+    let attempts = 0;
+    const maxAttempts = 30; // 1.5s max wait
     const check = () => {
-      if (window.gsap && window.Lenis) {
+      attempts++;
+      if ((window.gsap && window.Lenis) || attempts >= maxAttempts) {
         resolve();
       } else {
         setTimeout(check, 50);

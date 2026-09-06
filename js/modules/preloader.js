@@ -30,27 +30,25 @@ export function initPreloader() {
     // Prevent body scroll while preloader is active
     document.body.style.overflow = 'hidden';
 
-    const MIN_DURATION = 5000; // Always show for at least 5 seconds
+    const MIN_DURATION = 1400; // Snappy luxury intro (1.4s)
     const startTime    = Date.now();
 
     let count = 0;
-    const duration = 4200; // counter animation runs for ~4.2s (leaves ~0.8s hold at 100%)
+    const duration = 1000; // Counter counts to 100 in 1 second
     const steps    = 100;
     const interval = duration / steps;
 
     const tick = setInterval(() => {
-      // Ease-in-out feel: accelerate in middle, slow at ends
       count = Math.min(count + 1, 100);
 
-      if (counter) counter.firstChild.nodeValue = count;
+      if (counter && counter.firstChild) counter.firstChild.nodeValue = count;
       if (progress) progress.style.width = `${count}%`;
 
       if (count >= 100) {
         clearInterval(tick);
 
-        // Wait until the minimum 5s has elapsed before starting exit
         const elapsed   = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_DURATION - elapsed - 400);
+        const remaining = Math.max(0, MIN_DURATION - elapsed);
 
         setTimeout(() => exitPreloader(preloader, resolve), remaining);
       }

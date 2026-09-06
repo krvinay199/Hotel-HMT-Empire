@@ -15,8 +15,11 @@ import { initWhatsApp, showToast } from './modules/whatsapp.js';
 import { initExperience } from './modules/experience.js';
 function waitForLibraries() {
 return new Promise((resolve) => {
+let attempts = 0;
+const maxAttempts = 30;
 const check = () => {
-if (window.gsap && window.Lenis) {
+attempts++;
+if ((window.gsap && window.Lenis) || attempts >= maxAttempts) {
 resolve();
 } else {
 setTimeout(check, 50);
