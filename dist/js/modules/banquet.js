@@ -56,6 +56,7 @@ function selectLayout(layout, clickedBtn) {
 
   updateDescription(layout);
   renderSVGLayout(layout);
+  updateBanquetWhatsAppBtn();
 }
 
 function updateDescription(layout) {
@@ -190,17 +191,32 @@ function drawCocktail(addEl, W, H) {
   lbl.textContent = 'OPEN FLOOR';
 }
 
+function updateBanquetWhatsAppBtn() {
+  const wabtn = document.getElementById('banquet-whatsapp-btn');
+  if (wabtn) {
+    const layoutLabel = currentLayout?.label || 'Theatre Style';
+    const msg = `Hi, I'm interested in booking the Banquet Hall with ${layoutLabel} layout (Capacity: ${currentLayout?.capacity || '250'} guests).`;
+    const url = getWhatsAppUrl('event', msg);
+    wabtn.href   = url;
+    wabtn.target = '_blank';
+    wabtn.rel    = 'noopener noreferrer';
+  }
+}
+
 function initCTAs() {
   // Enquire button scrolls to RFQ section
-  document.getElementById('banquet-rfq-btn')?.addEventListener('click', () => {
+  document.getElementById('banquet-rfq-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
     scrollTo('#rfq', -80);
   });
 
   // WhatsApp button
   const wabtn = document.getElementById('banquet-whatsapp-btn');
   if (wabtn) {
-    wabtn.href = getWhatsAppUrl('event', `I'm interested in banquet booking — ${currentLayout?.label || 'Theatre Style'} layout.`);
-    wabtn.target = '_blank';
-    wabtn.rel    = 'noopener noreferrer';
+    updateBanquetWhatsAppBtn();
+    wabtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateBanquetWhatsAppBtn();
+    });
   }
 }
